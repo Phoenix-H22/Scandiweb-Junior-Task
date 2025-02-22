@@ -1,0 +1,4 @@
+/config/app.php
+docker-compose-lamp/data/mysql/mysql.sock
+vendor/
+.idea/
