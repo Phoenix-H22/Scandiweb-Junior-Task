@@ -88,6 +88,7 @@ VITE_BASE_URL=http://your-api-url
 ## Testing
 
 Run the automated tests at: http://165.227.98.170/
+![img.png](img.png)
 
 ## Live Demo
 - Frontend: https://scandiweb.phoenixtechs.tech/
