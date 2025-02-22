@@ -4,6 +4,7 @@ import { useCart } from "../../../../hooks/useCart.ts";
 import { CartItem } from "../CartItem";
 import { CREATE_ORDER,client,OrderItemInput } from "../../../../api";
 import { useClickOutside } from "../../../../hooks/useClickOutside";
+import {showToast} from "../../../../utils/toast.ts";
 
 interface CartOverlayProps {
     open: boolean;
@@ -44,6 +45,8 @@ export default function CartOverlay({ open, onClose }: CartOverlayProps) {
 
         setIsPlacingOrder(true);
         try {
+            const loadingToast = showToast.loading('Placing your order...');
+
             const formattedItems: OrderItemInput[] = cart.map(item => ({
                 productId: item.id,
                 quantity: item.quantity,
@@ -63,21 +66,25 @@ export default function CartOverlay({ open, onClose }: CartOverlayProps) {
             });
 
             if (errors) {
+                showToast.dismiss(loadingToast);
                 throw new Error(errors[0].message);
             }
 
             if (data?.createOrder) {
+                showToast.dismiss(loadingToast);
+                showToast.success(`Order #${data.createOrder} placed successfully!`);
                 clearCart();
-               onClose();
+                onClose();
             } else {
+                showToast.dismiss(loadingToast);
                 throw new Error('No order ID returned from server');
             }
         } catch (error: unknown) {
             console.error('Failed to place order:', error);
             if (error instanceof Error) {
-                console.log("Failed to place order. Please try again" + error)
+                showToast.error(`Failed to place order: ${error.message}`);
             } else {
-                console.log("Failed to place order. Please try again")
+                showToast.error('Failed to place order. Please try again');
             }
         } finally {
             setIsPlacingOrder(false);
