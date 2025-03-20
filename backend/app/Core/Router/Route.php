@@ -1,18 +1,19 @@
 <?php
 
 namespace App\Core\Router;
+
 use App\Core\Errors\Errors;
 use ReflectionClass;
 
 /**
  * Route class is responsible for routing the application
  */
-
 class Route
 {
-    
+
     use Router;
     use UrlEngine;
+
     private const API_PREFIX = '/api';
 
 
@@ -35,6 +36,11 @@ class Route
 
         if (!$callable) {
             Errors::E404();
+        }
+
+        $middlewares = $callable['middlewares'] ?? [];
+        foreach ($middlewares as $middleware) {
+            $middleware->handle();
         }
 
         $class = "App\\Controllers\\" . $callable['class'];
@@ -75,12 +81,10 @@ class Route
     private function match($method, $url)
     {
         foreach (self::$map[$method] as $uri => $call) {
-
             $pattern = preg_replace('/\{(\w+)\}/', '(?P<$1>[^/]+)', $uri);
             $pattern = "@^" . $pattern . "$@";
 
             if (preg_match($pattern, $url, $matches)) {
-
                 $params = array_filter(
                     $matches,
                     fn($key) => !is_numeric($key),

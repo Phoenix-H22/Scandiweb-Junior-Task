@@ -1,82 +1,47 @@
 <?php
 
 namespace App\Core\Router;
+
 /**
  * Router class is responsible for adding routes to the map depending on the request method
  */
-
 trait Router
 {
-    private static $map;
-    /**
-     * get method is responsible for adding get routes to the map
-     *
-     * @param string $url
-     * @param string $class
-     * @param string $method
-     * @return void
-     */
-    public static function get($url, $class, $method)
-    {
+    private static array $map;
 
+    public static function get(string $url, string $class, string $method, array $middlewares = []): void
+    {
         self::$map['get'][$url] = [
-            'class'=>$class,
-            'method'=>$method
+            'class' => $class,
+            'method' => $method,
+            'middlewares' => $middlewares,
         ];
     }
-    /**
-     * post method is responsible for adding post routes to the map
-     *
-     * @param string $url
-     * @param string $class
-     * @param string $method
-     * @return void
-     */
-    public static function post($url, $class, $method)
+    public static function post(string $url, string $class, string $method, array $middlewares = []): void
     {
-
         self::$map['post'][$url] = [
-            'class'=>$class,
-            'method'=>$method
+            'class' => $class,
+            'method' => $method,
+            'middlewares' => $middlewares,
         ];
     }
-    /**
-     * put method is responsible for adding put routes to the map
-     *
-     * @param string $url
-     * @param string $class
-     * @param string $method
-     * @return void
-     */
-    public static function put($url, $class, $method)
+    public static function put(string $url, string $class, string $method, array $middlewares = []): void
     {
         self::$map['put'][$url] = [
             'class' => $class,
             'method' => $method,
+            'middlewares' => $middlewares,
         ];
     }
-    /**
-     * delete method is responsible for adding delete routes to the map
-     *
-     * @param string $url
-     * @param string $class
-     * @param string $method
-     * @return void
-     */
-    public static function delete($url, $class, $method)
+    public static function delete(string $url, string $class, string $method, array $middlewares = []): void
     {
         self::$map['delete'][$url] = [
             'class' => $class,
             'method' => $method,
+            'middlewares' => $middlewares,
         ];
     }
-    /**
-     * getMap method is responsible for returning the map
-     *
-     * @return array
-     */
-
-    public static function getMap()
+    public static function getMap(): array
     {
         return self::$map;
     }
