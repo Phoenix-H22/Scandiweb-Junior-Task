@@ -1,10 +1,12 @@
 <?php
 namespace App\Models;
 
-use App\Core\Model\AbstractOrder;
+
+use App\Core\Interfaces\OrderInterface;
+use App\Core\Model\Model;
 use PDO;
 
-class Order extends AbstractOrder {
+class Order extends Model implements OrderInterface {
     protected string $table = 'orders';
 
     public function createOrder(array $data): string
