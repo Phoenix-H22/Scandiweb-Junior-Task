@@ -1,12 +1,10 @@
 import {cn} from "../../../lib/utils.ts";
-
 interface AddToCartButtonProps {
     inStock: boolean;
     isValid: boolean;
     onClick: () => void;
 }
-
-export function AddToCartButton({ inStock, isValid, onClick }: AddToCartButtonProps) {
+export function AddToCartButton({inStock, isValid, onClick}: AddToCartButtonProps) {
     const isDisabled = !inStock || !isValid;
 
     return (

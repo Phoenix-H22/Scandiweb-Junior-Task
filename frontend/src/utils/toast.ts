@@ -1,5 +1,4 @@
 import toast from 'react-hot-toast';
-
 export const showToast = {
     success: (message: string) => {
         toast.success(message, {

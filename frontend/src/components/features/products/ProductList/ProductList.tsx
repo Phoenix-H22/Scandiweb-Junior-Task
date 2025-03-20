@@ -1,5 +1,5 @@
-import { useLocation } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import {useLocation} from "react-router-dom";
+import {useQuery} from "@apollo/client";
 import {
     GET_PRODUCTS_AND_CATEGORY,
     GetProductsAndCategoryResponse,
@@ -8,28 +8,28 @@ import {
     client,
     Category
 } from "../../../../api";
-import { ProductCard } from "../ProductCard";
-import { useCategory } from "../../../../hooks/useCategory.ts";
+import {ProductCard} from "../ProductCard";
+import {useCategory} from "../../../../hooks/useCategory.ts";
 
 interface ProductListProps {
     className?: string;
 }
 
-export default function ProductList({ className }: ProductListProps) {
-    const { categoryName } = useCategory();
+export default function ProductList({className}: ProductListProps) {
+    const {categoryName} = useCategory();
     const location = useLocation();
     const path = location.pathname.slice(1);
 
-    const { data: categoriesData } = useQuery(GET_CATEGORIES);
+    const {data: categoriesData} = useQuery(GET_CATEGORIES);
     const category = categoriesData?.categories.find(
         (cat: Category) => cat.name.toLowerCase() === (path || 'all')
     );
     const categoryId = category?.id;
 
-    const { loading, error, data } = useQuery<GetProductsAndCategoryResponse>(
+    const {loading, error, data} = useQuery<GetProductsAndCategoryResponse>(
         GET_PRODUCTS_AND_CATEGORY,
         {
-            variables: { categoryId },
+            variables: {categoryId},
             client: client,
         }
     );

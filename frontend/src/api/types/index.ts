@@ -13,6 +13,7 @@ export interface ProductAttribute {
     name: string;
     values: string[];
 }
+
 export interface BaseProduct {
     id: string;
     name: string;
@@ -24,6 +25,7 @@ export interface BaseProduct {
         values: string[];
     }[];
 }
+
 export interface Product {
     id: string;
     name: string;

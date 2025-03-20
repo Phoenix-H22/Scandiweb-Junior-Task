@@ -1,10 +1,9 @@
-import { createContext, useContext } from "react";
-import { BaseProduct } from '../../api';
+import {createContext, useContext} from "react";
+import {BaseProduct} from '../../api';
 
 export interface CartItem extends BaseProduct {
     quantity: number;
 }
-
 export interface CartContextType {
     cart: CartItem[];
     addToCart: (product: BaseProduct) => void;
@@ -14,12 +13,7 @@ export interface CartContextType {
     totalItems: number;
     totalPrice: number;
 }
-
 export const CartContext = createContext<CartContextType | undefined>(undefined);
-
-
-
-
 export const useCartContext = () => {
     const context = useContext(CartContext);
     if (context === undefined) {

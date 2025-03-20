@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
-import { Product } from "../../../../api";
-import { useCart } from "../../../../hooks/useCart.ts";
+import {Link} from "react-router-dom";
+import {Product} from "../../../../api";
+import {useCart} from "../../../../hooks/useCart.ts";
 import {formatPrice} from "../../../../utils/formatters/price.ts";
 import {useCartOverlay} from "../../../../contexts/cart/useCartOverlay.tsx";
 
@@ -8,9 +8,9 @@ interface ProductCardProps {
     product: Product;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
-    const { addToCart } = useCart();
-    const { setIsCartOpen } = useCartOverlay();
+export default function ProductCard({product}: ProductCardProps) {
+    const {addToCart} = useCart();
+    const {setIsCartOpen} = useCartOverlay();
     const price = formatPrice(product.prices[0].amount, product.prices[0].currency_label);
 
     const getKebabCase = (str: string) => {
@@ -67,7 +67,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         onClick={handleQuickAdd}
                         className="absolute z-30 -bottom-5 right-5 w-10 h-10 rounded-full flex items-center justify-center duration-200 bg-[#5ECE7B] opacity-0 group-hover:opacity-100 cursor-pointer hover:bg-[#4eb369] transform hover:scale-110 transition-all"
                     >
-                        <img src="/icons/white-cart.svg" alt="add-to-cart" />
+                        <img src="/icons/white-cart.svg" alt="add-to-cart"/>
                     </button>
                 )}
             </div>

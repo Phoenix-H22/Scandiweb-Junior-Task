@@ -1,5 +1,5 @@
-import { ProductAttribute } from "../../../api";
-import { cn } from "../../../lib/utils.ts";
+import {ProductAttribute} from "../../../api";
+import {cn} from "../../../lib/utils.ts";
 
 interface ProductAttributesProps {
     attributes: ProductAttribute[];

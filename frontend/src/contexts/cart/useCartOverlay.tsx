@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react';
+import {createContext, useContext, useState} from 'react';
 
 interface CartOverlayContextType {
     isCartOpen: boolean;
@@ -7,11 +7,11 @@ interface CartOverlayContextType {
 
 const CartOverlayContext = createContext<CartOverlayContextType | undefined>(undefined);
 
-export function CartOverlayProvider({ children }: { children: React.ReactNode }) {
+export function CartOverlayProvider({children}: { children: React.ReactNode }) {
     const [isCartOpen, setIsCartOpen] = useState(false);
 
     return (
-        <CartOverlayContext.Provider value={{ isCartOpen, setIsCartOpen }}>
+        <CartOverlayContext.Provider value={{isCartOpen, setIsCartOpen}}>
             {children}
         </CartOverlayContext.Provider>
     );

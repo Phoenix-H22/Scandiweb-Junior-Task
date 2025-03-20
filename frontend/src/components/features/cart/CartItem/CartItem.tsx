@@ -1,11 +1,9 @@
-import { CartItem as ICartItem } from "../../../../contexts/cart/CartContext";
-
+import {CartItem as ICartItem} from "../../../../contexts/cart/CartContext";
 interface CartItemProps {
     item: ICartItem;
     onUpdateQuantity: (id: string, attributes: Record<string, string>, increment: boolean) => void;
 }
-
-export default function CartItem({ item, onUpdateQuantity }: CartItemProps) {
+export default function CartItem({item, onUpdateQuantity}: CartItemProps) {
     const attributesRecord = Object.fromEntries(
         item.attributes.map(attr => [attr.name, attr.selectedValue])
     );
@@ -38,7 +36,7 @@ export default function CartItem({ item, onUpdateQuantity }: CartItemProps) {
                                             className={`w-8 h-8 rounded-sm ${
                                                 isSelected ? 'ring-2 ring-black' : ''
                                             }`}
-                                            style={{ backgroundColor: value }}
+                                            style={{backgroundColor: value}}
                                         />
                                     );
                                 }

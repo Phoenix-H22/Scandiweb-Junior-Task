@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { BaseProduct,GET_PRODUCT,client,GetProductResponse  } from "../../api";
-import { useCartContext } from "../../contexts/cart/CartContext.tsx";
+import {useState, useEffect} from "react";
+import {useParams} from "react-router-dom";
+import {useQuery} from "@apollo/client";
+import {BaseProduct, GET_PRODUCT, client, GetProductResponse} from "../../api";
+import {useCartContext} from "../../contexts/cart/CartContext.tsx";
 import {
     ProductGalleryThumbnails,
     ProductMainImage,
@@ -12,19 +12,18 @@ import {
     AddToCartButton,
     ProductDescription
 } from './components';
-import { useCartOverlay } from "../../contexts/cart/useCartOverlay";
+import {useCartOverlay} from "../../contexts/cart/useCartOverlay";
 
 export default function ProductDetails() {
-    const { id } = useParams<{ id: string }>();
+    const {id} = useParams<{ id: string }>();
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [selectedAttributes, setSelectedAttributes] = useState<Record<string, string>>({});
-    const { addToCart } = useCartContext();
-    const { setIsCartOpen } = useCartOverlay();
+    const {addToCart} = useCartContext();
+    const {setIsCartOpen} = useCartOverlay();
 
-
-    const { loading, error, data } = useQuery<GetProductResponse>(GET_PRODUCT, {
+    const {loading, error, data} = useQuery<GetProductResponse>(GET_PRODUCT, {
         client,
-        variables: { id },
+        variables: {id},
         skip: !id,
     });
     useEffect(() => {
@@ -57,7 +56,7 @@ export default function ProductDetails() {
         );
     }
 
-    const { product } = data;
+    const {product} = data;
 
     const handlePrevImage = () => {
         setCurrentImageIndex((prev) => (prev === 0 ? product.gallery.length - 1 : prev - 1));
@@ -123,7 +122,7 @@ export default function ProductDetails() {
 
                     {/* Product Info */}
                     <div className="sm:w-1/4 space-y-6">
-                        <ProductHeader name={product.name} brand={product.brand} />
+                        <ProductHeader name={product.name} brand={product.brand}/>
 
                         {/* Attributes */}
                         <ProductAttributes

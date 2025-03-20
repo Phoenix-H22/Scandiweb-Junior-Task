@@ -1,10 +1,9 @@
-import { Price } from "../../../api";
+import {Price} from "../../../api";
 
 interface ProductPriceProps {
     price: Price;
 }
-
-export function ProductPrice({ price }: ProductPriceProps) {
+export function ProductPrice({price}: ProductPriceProps) {
     return (
         <div className="space-y-2">
             <label className="text-sm font-medium uppercase text-gray-700">

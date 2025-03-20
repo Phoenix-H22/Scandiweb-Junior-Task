@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import { cn } from "../../../../lib/utils";
-import { useCart } from "../../../../hooks/useCart.ts";
-import { CartItem } from "../CartItem";
-import { CREATE_ORDER,client,OrderItemInput } from "../../../../api";
-import { useClickOutside } from "../../../../hooks/useClickOutside";
+import {useCallback, useEffect, useState} from "react";
+import {cn} from "../../../../lib/utils";
+import {useCart} from "../../../../hooks/useCart.ts";
+import {CartItem} from "../CartItem";
+import {CREATE_ORDER, client, OrderItemInput} from "../../../../api";
+import {useClickOutside} from "../../../../hooks/useClickOutside";
 import {showToast} from "../../../../utils/toast.ts";
 
 interface CartOverlayProps {
@@ -11,7 +11,11 @@ interface CartOverlayProps {
     onClose: () => void;
 }
 
-const generateCartItemId = (id: string, attributes: Array<{ name: string; selectedValue: string; values: string[] }>) => {
+const generateCartItemId = (id: string, attributes: Array<{
+    name: string;
+    selectedValue: string;
+    values: string[]
+}>) => {
     const sortedAttributes = attributes
         .sort((a, b) => a.name.localeCompare(b.name))
         .map(attr => `${attr.name}:${attr.selectedValue}`)
@@ -19,8 +23,8 @@ const generateCartItemId = (id: string, attributes: Array<{ name: string; select
     return `${id}-${sortedAttributes}`;
 };
 
-export default function CartOverlay({ open, onClose }: CartOverlayProps) {
-    const { cart, updateQuantity, totalItems, totalPrice, clearCart } = useCart();
+export default function CartOverlay({open, onClose}: CartOverlayProps) {
+    const {cart, updateQuantity, totalItems, totalPrice, clearCart} = useCart();
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
     useClickOutside(open, onClose, '[data-testid="cart-btn"]');
@@ -56,7 +60,7 @@ export default function CartOverlay({ open, onClose }: CartOverlayProps) {
                 }))
             }));
 
-            const { data, errors } = await client.mutate<{ createOrder: string }>({
+            const {data, errors} = await client.mutate<{ createOrder: string }>({
                 mutation: CREATE_ORDER,
                 variables: {
                     items: formattedItems,

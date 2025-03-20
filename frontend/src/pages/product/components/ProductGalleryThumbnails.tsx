@@ -6,7 +6,7 @@ interface ProductGalleryThumbnailsProps {
     onSelect: (index: number) => void;
 }
 
-export function ProductGalleryThumbnails({ gallery, currentIndex, onSelect }: ProductGalleryThumbnailsProps) {
+export function ProductGalleryThumbnails({gallery, currentIndex, onSelect}: ProductGalleryThumbnailsProps) {
     return (
         <div className="hidden md:block w-[200px] h-[600px] overflow-hidden">
             <div className="h-full overflow-y-auto pr-4 hide-scrollbar">

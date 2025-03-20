@@ -1,8 +1,7 @@
 interface ProductDescriptionProps {
     description: string;
 }
-
-export function ProductDescription({ description }: ProductDescriptionProps) {
+export function ProductDescription({description}: ProductDescriptionProps) {
     return (
         <div
             data-testid="product-description"

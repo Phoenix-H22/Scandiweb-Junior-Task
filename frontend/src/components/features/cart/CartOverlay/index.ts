@@ -1,1 +1,1 @@
-export { default as CartOverlay } from './CartOverlay';
+export {default as CartOverlay} from './CartOverlay';

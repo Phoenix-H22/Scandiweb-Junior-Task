@@ -4,7 +4,7 @@ import {CartContext, CartItem} from "./CartContext.tsx";
 interface CartProviderProps {
     children: ReactNode;
 }
-export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
+export const CartProvider: React.FC<CartProviderProps> = ({children}) => {
     const [cart, setCart] = useState<CartItem[]>(() => {
         const storedCart = localStorage.getItem("cart");
         return storedCart ? JSON.parse(storedCart) : [];
@@ -33,12 +33,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
             if (existingItemIndex > -1) {
                 return prevCart.map((item, index) =>
                     index === existingItemIndex
-                        ? { ...item, quantity: item.quantity + 1 }
+                        ? {...item, quantity: item.quantity + 1}
                         : item
                 );
             }
 
-            return [...prevCart, { ...product, quantity: 1 }];
+            return [...prevCart, {...product, quantity: 1}];
         });
     };
 
@@ -53,7 +53,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
                 if (itemId === cartItemId) {
                     const newQuantity = increment ? item.quantity + 1 : item.quantity - 1;
                     if (newQuantity === 0) return acc;
-                    return [...acc, { ...item, quantity: newQuantity }];
+                    return [...acc, {...item, quantity: newQuantity}];
                 }
                 return [...acc, item];
             }, [] as CartItem[]);

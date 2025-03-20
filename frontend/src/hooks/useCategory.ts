@@ -1,5 +1,6 @@
 import {useContext} from "react";
 import {CategoryContext} from "../contexts/category/CategoryContext.tsx";
+
 export {CategoryProvider} from "../contexts/category/CategoryProvider.tsx";
 
 export function useCategory() {

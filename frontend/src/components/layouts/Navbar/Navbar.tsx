@@ -1,6 +1,6 @@
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {cn} from "../../../lib/utils.ts";
-import {Category, GET_CATEGORIES,useQuery,client} from "../../../api";
+import {Category, GET_CATEGORIES, useQuery, client} from "../../../api";
 import {CartOverlay} from "../../features/cart/CartOverlay";
 import {useEffect} from "react";
 import {useCategory} from "../../../hooks/useCategory.ts";
@@ -8,14 +8,14 @@ import {useCart} from "../../../hooks/useCart.ts";
 import {useCartOverlay} from "../../../contexts/cart/useCartOverlay.tsx";
 
 function Navbar() {
-    const { isCartOpen, setIsCartOpen } = useCartOverlay();
-    const { totalItems } = useCart();
-    const { setCategoryName } = useCategory();
+    const {isCartOpen, setIsCartOpen} = useCartOverlay();
+    const {totalItems} = useCart();
+    const {setCategoryName} = useCategory();
     const navigate = useNavigate();
     const location = useLocation();
     const currentPath = location.pathname;
 
-    const { loading, error, data } = useQuery<{ categories: Category[] }>(GET_CATEGORIES, {
+    const {loading, error, data} = useQuery<{ categories: Category[] }>(GET_CATEGORIES, {
         client: client,
     });
 
@@ -85,7 +85,7 @@ function Navbar() {
                                     {category.name}
                                 </Link>
                                 {isActive && (
-                                    <div className="absolute left-0 -bottom-6 w-full h-0.5 bg-[#5ECE7B]" />
+                                    <div className="absolute left-0 -bottom-6 w-full h-0.5 bg-[#5ECE7B]"/>
                                 )}
                             </li>
                         );
@@ -110,9 +110,10 @@ function Navbar() {
                     }}
                     data-testid="cart-btn"
                 >
-                    <img src="/icons/cart.svg" alt="cart" />
+                    <img src="/icons/cart.svg" alt="cart"/>
                     {totalItems > 0 && (
-                        <div className="absolute -top-2 -right-3 flex items-center justify-center px-1.5 h-[20px] rounded-full bg-[#1D1F22] text-white font-semibold text-center roboto">
+                        <div
+                            className="absolute -top-2 -right-3 flex items-center justify-center px-1.5 h-[20px] rounded-full bg-[#1D1F22] text-white font-semibold text-center roboto">
                             <span>{totalItems}</span>
                         </div>
                     )}
