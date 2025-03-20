@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\GraphQL\GraphQLSchema;
@@ -6,13 +7,12 @@ use GraphQL\GraphQL;
 use GraphQL\Error\DebugFlag;
 use GraphQL\Error\FormattedError;
 
-class GraphQLController {
-    public function handle() {
+class GraphQLController
+{
+    public function handle(): void
+    {
         try {
-
             $schema = GraphQLSchema::createSchema();
-
-
             $rawInput = file_get_contents('php://input');
             $input = json_decode($rawInput, true);
             $query = $input['query'] ?? '';

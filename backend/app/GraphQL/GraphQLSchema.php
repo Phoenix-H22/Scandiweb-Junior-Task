@@ -1,4 +1,5 @@
 <?php
+
 namespace App\GraphQL;
 
 use App\Models\Product;
@@ -9,14 +10,16 @@ use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Schema;
 
-class GraphQLSchema {
+class GraphQLSchema
+{
     private static $productType = null;
     private static $priceType = null;
     private static $categoryType = null;
     private static $orderType = null;
     private static $attributeType = null;
 
-    public static function createSchema() {
+    public static function createSchema(): Schema
+    {
         return new Schema([
             'query' => new ObjectType([
                 'name' => 'Query',
@@ -26,7 +29,7 @@ class GraphQLSchema {
                         'args' => [
                             'categoryId' => Type::int(),
                         ],
-                        'resolve' => function($root, $args) {
+                        'resolve' => function ($root, $args) {
                             try {
                                 $productModel = new Product();
                                 return $productModel->findAllByCategory($args['categoryId'] ?? null);
@@ -41,7 +44,7 @@ class GraphQLSchema {
                         'args' => [
                             'id' => Type::nonNull(Type::string())
                         ],
-                        'resolve' => function($root, $args) {
+                        'resolve' => function ($root, $args) {
                             try {
                                 $productModel = new Product();
                                 return $productModel->findById($args['id']);
@@ -51,13 +54,12 @@ class GraphQLSchema {
                             }
                         }
                     ],
-                    // ✅ Fetch all categories
                     'categories' => [
                         'type' => Type::listOf(self::categoryType()),
                         'args' => [
                             'id' => Type::int(),
                         ],
-                        'resolve' => function($root, $args) {
+                        'resolve' => function ($root, $args) {
                             try {
                                 $categoryModel = new Category();
                                 return isset($args['id'])
@@ -73,22 +75,23 @@ class GraphQLSchema {
 
                     'orders' => [
                         'type' => Type::listOf(self::orderType()),
-                        'resolve' => function() {
+                        'resolve' => function () {
                             $orderModel = new Order();
                             return $orderModel->findAll();
                         }
                     ]
-            ]
+                ]
             ]),
             'mutation' => self::mutationType()
         ]);
     }
 
-    private static function productType() {
+    private static function productType(): ?ObjectType
+    {
         if (self::$productType === null) {
             self::$productType = new ObjectType([
                 'name' => 'Product',
-                'fields' => function() {
+                'fields' => function () {
                     return [
                         'id' => Type::string(),
                         'name' => Type::string(),
@@ -107,7 +110,8 @@ class GraphQLSchema {
         return self::$productType;
     }
 
-    private static function attributeType() {
+    private static function attributeType(): ?ObjectType
+    {
         if (self::$attributeType === null) {
             self::$attributeType = new ObjectType([
                 'name' => 'Attribute',
@@ -119,7 +123,9 @@ class GraphQLSchema {
         }
         return self::$attributeType;
     }
-    private static function categoryType() {
+
+    private static function categoryType(): ?ObjectType
+    {
         if (self::$categoryType === null) {
             self::$categoryType = new ObjectType([
                 'name' => 'Category',
@@ -132,7 +138,8 @@ class GraphQLSchema {
         return self::$categoryType;
     }
 
-    private static function priceType() {
+    private static function priceType(): ?ObjectType
+    {
         if (self::$priceType === null) {
             self::$priceType = new ObjectType([
                 'name' => 'Price',
@@ -147,18 +154,19 @@ class GraphQLSchema {
     }
 
 
-    private static function orderType() {
+    private static function orderType(): ?ObjectType
+    {
         if (self::$orderType === null) {
             self::$orderType = new ObjectType([
                 'name' => 'Order',
-                'fields' => function() {
+                'fields' => function () {
                     return [
                         'id' => Type::int(),
                         'total_amount' => Type::float(),
                         'currency' => Type::string(),
                         'products' => [
                             'type' => Type::listOf(self::productType()),
-                            'resolve' => function($order) {
+                            'resolve' => function ($order) {
                                 return (new Order())->getOrderProductDetails($order['id']);
                             }
                         ]
@@ -170,7 +178,8 @@ class GraphQLSchema {
     }
 
 
-    private static function mutationType() {
+    private static function mutationType(): ObjectType
+    {
         return new ObjectType([
             'name' => 'Mutation',
             'fields' => [

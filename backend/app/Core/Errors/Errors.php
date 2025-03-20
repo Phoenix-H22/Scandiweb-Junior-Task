@@ -2,14 +2,11 @@
 
 namespace App\Core\Errors;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Errors
 {
-    /**
-     * E404 method is responsible for rendering 404 page
-     *
-     * @return void
-     */
-    public static function E404():void
+    #[NoReturn] public static function E404(): void
     {
         header('Content-Type: application/json');
 
@@ -20,12 +17,8 @@ class Errors
         ]);
         die();
     }
-    /**
-     * E500 method is responsible for rendering 500 page
-     *
-     * @return void
-     */
-    public static function E500($request = null , $message = null): void
+
+    #[NoReturn] public static function E500($request = null, $message = null): void
     {
         header('Content-Type: application/json');
 

@@ -1,6 +1,8 @@
 <?php
+
 namespace App\Core\Interfaces;
 
-interface AttributeInterface {
+interface AttributeInterface
+{
     public function getValues(): array;
 }

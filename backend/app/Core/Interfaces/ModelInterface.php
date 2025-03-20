@@ -1,7 +1,10 @@
 <?php
+
 namespace App\Core\Interfaces;
 
-interface ModelInterface {
+interface ModelInterface
+{
     public function findAll(): array;
+
     public function findById($id): ?array;
 }

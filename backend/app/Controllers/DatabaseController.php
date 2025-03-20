@@ -7,7 +7,7 @@ use PDOException;
 
 class DatabaseController
 {
-    public function seed()
+    public function seed(): void
     {
         $dsn = "mysql:host=localhost;dbname=scandiweb;charset=utf8mb4";
         $username = "root";
@@ -38,39 +38,49 @@ class DatabaseController
             $categoryStmt->execute(['name' => $category['name']]);
         }
 
-        function getCategoryId($categoryName, $pdo) {
+        function getCategoryId($categoryName, $pdo)
+        {
             $stmt = $pdo->prepare("SELECT id FROM categories WHERE name = :name LIMIT 1");
             $stmt->execute(['name' => $categoryName]);
             return $stmt->fetchColumn() ?: null;
         }
 
-        function getAttributeId($attributeName, $pdo) {
+        function getAttributeId($attributeName, $pdo)
+        {
             $stmt = $pdo->prepare("SELECT id FROM attributes WHERE name = :name LIMIT 1");
             $stmt->execute(['name' => $attributeName]);
             return $stmt->fetchColumn();
         }
 
-        $productStmt = $pdo->prepare("
+        $productStmt = $pdo->prepare(
+            "
     INSERT INTO products (id, name, description, in_stock, category_id, brand) 
     VALUES (:id, :name, :description, :in_stock, :category_id, :brand)
     ON DUPLICATE KEY UPDATE name=VALUES(name), description=VALUES(description), in_stock=VALUES(in_stock), brand=VALUES(brand)
-");
+"
+        );
 
-        $priceStmt = $pdo->prepare("
+        $priceStmt = $pdo->prepare(
+            "
     INSERT INTO prices (product_id, amount, currency_label, currency_symbol) 
     VALUES (:product_id, :amount, :currency_label, :currency_symbol)
     ON DUPLICATE KEY UPDATE amount=VALUES(amount), currency_label=VALUES(currency_label), currency_symbol=VALUES(currency_symbol)
-");
+"
+        );
 
-        $attributeStmt = $pdo->prepare("
+        $attributeStmt = $pdo->prepare(
+            "
     INSERT INTO attributes (name, type) VALUES (:name, :type)
-");
+"
+        );
 
-        $attrValueStmt = $pdo->prepare("
+        $attrValueStmt = $pdo->prepare(
+            "
     INSERT INTO product_attributes (product_id, attribute_id, value) 
     VALUES (:product_id, :attribute_id, :value)
     ON DUPLICATE KEY UPDATE value=value
-");
+"
+        );
 
         foreach ($data['products'] as $product) {
             $categoryId = getCategoryId($product['category'], $pdo);
@@ -95,10 +105,8 @@ class DatabaseController
 
 
             foreach ($product['attributes'] as $attribute) {
-
                 $attributeId = getAttributeId($attribute['name'], $pdo);
                 if (!$attributeId) {
-
                     $attributeStmt->execute([
                         'name' => $attribute['name'],
                         'type' => $attribute['type']
@@ -118,10 +126,10 @@ class DatabaseController
         }
 
         echo "✅ Database populated successfully (No Duplicate Attributes)!";
-
     }
-    public function seedGalleryData() {
 
+    public function seedGalleryData(): void
+    {
         $dsn = "mysql:host=localhost;dbname=scandiweb;charset=utf8mb4";
         $username = "root";
         $password = "";
@@ -146,14 +154,16 @@ class DatabaseController
         foreach ($data as $product) {
             if (isset($product['gallery']) && is_array($product['gallery'])) {
                 foreach ($product['gallery'] as $imageUrl) {
-                    $stmt = $pdo->prepare("INSERT INTO product_gallery (product_id, image_url) VALUES (:product_id, :image_url)");
+                    $stmt = $pdo->prepare(
+                        "INSERT INTO product_gallery (product_id, image_url) VALUES (:product_id, :image_url)"
+                    );
                     $stmt->execute([
                         'product_id' => $product['id'],
                         'image_url' => $imageUrl
                     ]);
                 }
             }
-            var_dump($product,"<br>");
+            var_dump($product, "<br>");
             var_dump(isset($product['gallery']));
         }
 

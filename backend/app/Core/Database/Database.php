@@ -11,9 +11,6 @@ use App\Core\Errors\Errors;
  */
 class Database
 {
-    /**
-     * @var PDO
-     */
     protected static ?PDO $pdo = null;
 
     public function __construct()

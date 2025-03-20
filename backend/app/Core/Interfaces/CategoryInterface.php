@@ -1,8 +1,12 @@
 <?php
+
 namespace App\Core\Interfaces;
 
-interface CategoryInterface {
+interface CategoryInterface
+{
     public function findById(int $id): ?array;
+
     public function findAll(): array;
+
     public function getProducts(): array;
 }
